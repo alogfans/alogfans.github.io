@@ -1,14 +1,13 @@
-name: Deploy Hugo
+name: Deploy Hugo Site
 on:
   push:
-    branches: [main] # 监听主分支推送
-permissions:
-  contents: write
+    branches: [main]
 jobs:
-  deploy:
+  build-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           submodules: true
           fetch-depth: 0
@@ -17,10 +16,11 @@ jobs:
         with:
           hugo-version: 'latest'
           extended: true
-      - name: Build
+      - name: Build Site
         run: hugo --minify
-      - name: Deploy
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
+          publish_branch: gh-pages
