@@ -1,6 +1,7 @@
 ---
 date: '2026-04-11T17:18:53+08:00'
 title: 'About Me'
+comments: true
 ---
 
 I am an independent researcher and a co-founder of the [Mooncake](https://github.com/kvcache-ai/Mooncake) project, where I serve as the lead architect and codeowner of the Mooncake Transfer Engine (aka Mooncake TE). My work primarily focuses on building high-performance systems and optimizing distributed infrastructures for the LLM era.
