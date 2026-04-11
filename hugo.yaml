@@ -6,14 +6,17 @@ theme: PaperMod
 params:
   comments: true
   profileMode:
-    enabled: true
-    title: "Feng Ren"
-    subtitle: "Independent Researcher | Founder of Mooncake Transfer Engine"
-    buttons:
-      - name: Blog
-        url: posts
-      - name: Mooncake
-        url: https://github.com/kvcache-ai/Mooncake
+    enabled: false
+  homeInfoParams:
+    Title: "Feng Ren"
+    Content: >
+      Independent Researcher | Founder of [Mooncake Transfer Engine](https://github.com/kvcache-ai/Mooncake)
+    socialIcons:
+      - name: "github"
+        url: "https://github.com/alogfans"
+      - name: "email"
+        url: "mailto:me@renfeng.org"
+
 markup:
   highlight:
     style: tango
@@ -22,9 +25,9 @@ markup:
 
 menu:
   main:
-    - identifier: blog
-      name: Blog
-      url: /posts/
+    - identifier: archives
+      name: Archives
+      url: /archives/
       weight: 10
     - identifier: about
       name: About
