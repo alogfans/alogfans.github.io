@@ -10,4 +10,6 @@ I earned my PhD from the Department of Computer Science, Tsinghua University, wh
 
 I am driven by the belief that "engineering excellence is the foundation of great research." Currently, I am based in Beijing, China, but I am always open to global technical exchange.
 
+Email: me AT renfeng.org
+
 [GitHub](https://github.com/alogfans) | [Google Scholar](https://scholar.google.com/citations?user=xqWDIyUAAAAJ&hl=en)
