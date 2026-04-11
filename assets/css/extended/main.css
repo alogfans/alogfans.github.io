@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+    --code-font-family: "JetBrains Mono", "Cascadia Code", "Fira Code", monospace;
+}
+
+code {
+    font-family: var(--code-font-family) !important;
+}
+
+.post-content {
+    letter-spacing: 0.01em;
+}
+
+.post-content p {
+    margin-bottom: 1.5rem;
+}
+
+.post-content pre {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}

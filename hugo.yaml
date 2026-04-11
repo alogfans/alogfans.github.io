@@ -1,0 +1,31 @@
+baseURL: https://renfeng.org/
+languageCode: en-us
+title: Feng Ren
+theme: PaperMod
+
+params:
+  profileMode:
+    enabled: true
+    title: "Feng Ren"
+    subtitle: "Independent Researcher | Founder of Mooncake Transfer Engine"
+    buttons:
+      - name: Blog
+        url: posts
+      - name: Mooncake
+        url: https://github.com/kvcache-ai/Mooncake
+markup:
+  highlight:
+    style: tango
+    noClasses: false
+    guessSyntax: true
+
+menu:
+  main:
+    - identifier: blog
+      name: Blog
+      url: /posts/
+      weight: 10
+    - identifier: about
+      name: About
+      url: /about/
+      weight: 20
