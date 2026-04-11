@@ -4,6 +4,7 @@ title: Feng Ren
 theme: PaperMod
 
 params:
+  comments: true
   profileMode:
     enabled: true
     title: "Feng Ren"
