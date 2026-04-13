@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on Feng Ren</title><link>https://renfeng.org/posts/</link><description>Recent content in Posts on Feng Ren</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Mon, 13 Apr 2026 22:27:00 +0800</lastBuildDate><atom:link href="https://renfeng.org/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>CCF Storage Evaluation 2026 is Coming</title><link>https://renfeng.org/posts/ccf-storage-evaluation-2026/</link><pubDate>Mon, 13 Apr 2026 22:27:00 +0800</pubDate><guid>https://renfeng.org/posts/ccf-storage-evaluation-2026/</guid><description>&lt;p&gt;我是 CCF 信息存储专委会存储测试工作组成员。欢迎对 Mooncake 传输引擎感兴趣的厂商参与相关存储测试与技术交流。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on Feng Ren</title><link>https://renfeng.org/posts/</link><description>Recent content in Posts on Feng Ren</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Mon, 13 Apr 2026 22:27:00 +0800</lastBuildDate><atom:link href="https://renfeng.org/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>CCF Storage Evaluation 2026 is Coming</title><link>https://renfeng.org/posts/ccf-storage-evaluation-2026/</link><pubDate>Mon, 13 Apr 2026 22:27:00 +0800</pubDate><guid>https://renfeng.org/posts/ccf-storage-evaluation-2026/</guid><description>&lt;p&gt;我是 CCF 信息存储专委会存储测试工作组成员。欢迎对 Mooncake 传输引擎感兴趣的厂商参与相关存储测试与技术交流（尽管这里的存储更多是指 SSD 等外存）。&lt;/p&gt;
 &lt;p&gt;I am a member of the CCF Storage Evaluation Working Group. We welcome vendors interested in the Mooncake Transfer Engine to participate in our storage testing initiatives and technical exchanges.&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;CCF信息存储专委会•存储测试工作组关于邀请开展存储测试的通知&lt;/p&gt;
 &lt;p&gt;随着社会生产服务活动云化、智能化持续演进，数据存储设施的重要作用日益凸显，各类应用场景对存储设备、产品从性能、可靠性、可信性、可管理性、兼容性、能效等多角度提出了更复杂的需求。本工作组致力于围绕一系列主流应用领域，建立一套契合场景需求的存储测试验证规范、方法和工具。以期为产品开发、学术研究、应用选型提供参考，为国家相关部门制定信息存储政策提供借鉴。在此召集各存储研发单位、用户单位开展本年度测试工作。&lt;/p&gt;
-&lt;p&gt;**测试工具：**测试使用基于人工智能场景、互联网应用场景、高性能计算场景数据访问特征开发的测试工具和参数集。&lt;/p&gt;
-&lt;p&gt;**测试流程：**自测，可任选1个或多个场景参与测试，并邀请存储测试工作组成员参与验证。日程安排：即日起开始，随时可提交结果。&lt;/p&gt;
-&lt;p&gt;**结果发布：**第32届CCF全国信息存储技术学术会议，2026年9月（天津）。测试结果也会发布在下面站点。&lt;/p&gt;
-&lt;p&gt;**工具获取：**https://8.145.32.66/wp/apps/eweb/ui&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;测试工具：&lt;/strong&gt; 测试使用基于人工智能场景、互联网应用场景、高性能计算场景数据访问特征开发的测试工具和参数集。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;测试流程：&lt;/strong&gt; 自测，可任选1个或多个场景参与测试，并邀请存储测试工作组成员参与验证。日程安排：即日起开始，随时可提交结果。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;结果发布：&lt;/strong&gt; 第32届CCF全国信息存储技术学术会议，2026年9月（天津）。测试结果也会发布在下面站点。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;工具获取：&lt;/strong&gt; https://8.145.32.66/wp/apps/eweb/ui&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;我们正在推进域名及 SSL 证书申请工作，若报告证书错误请暂时忽略。&lt;/p&gt;
 &lt;/blockquote&gt;
