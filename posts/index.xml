@@ -13,8 +13,8 @@
 &lt;/blockquote&gt;
 &lt;p&gt;然而，2026 年智能体范式下的“状态资产”正呈现出更复杂的形态：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;**在线强化学习（Online RL）流水线中的模型权重更新。**根据 Kimi Team 的技术报告，在线 RL 需要在模型采样（Rollout）的过程中，以微秒级的精度同步数千亿参数的梯度或权重，以避免采样任务因等待模型刷新而停顿 。在 Moonshot Checkpoint Engine 的典型场景下，这些频繁的参数下发同样表现为极高密度的“全量同步大象流（Elephant Flows）” 。&lt;/li&gt;
-&lt;li&gt;**MoE（专家混合模型）中的专家并行（Expert Parallelism, EP）。**在 MoE 架构中，Token 需要在不同的专家（Expert）之间频繁穿梭。这种专家并行流量（Mice flows）通常只有几十 KB，但它们正处于推理的执行关键路径上。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;在线强化学习（Online RL）流水线中的模型权重更新。&lt;/strong&gt; 根据 Kimi Team 的技术报告，在线 RL 需要在模型采样（Rollout）的过程中，以微秒级的精度同步数千亿参数的梯度或权重，以避免采样任务因等待模型刷新而停顿。在 Moonshot Checkpoint Engine 的典型场景下，这些频繁的参数下发同样表现为极高密度的“全量同步大象流（Elephant Flows）” 。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MoE（专家混合模型）中的专家并行（Expert Parallelism, EP）。&lt;/strong&gt; 在 MoE 架构中，Token 需要在不同的专家（Expert）之间频繁穿梭。这种专家并行流量（Mice flows）通常只有几十 KB，但它们正处于推理的执行关键路径上。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id="链路不止-rdma"&gt;链路：不止 RDMA&lt;/h3&gt;
 &lt;p&gt;从链路的角度上来说，多种物理特性迥异的存储介质（如DRAM、GPU/NPU显存、NVMe SSD等）及多种高速互联技术（如 NVLink、RDMA、CXL等）共同构成了复杂的非均质存储互联系统（Heterogeneous Storage Interconnect）。&lt;/p&gt;</description></item><item><title>CCF Storage Evaluation 2026 is Coming</title><link>https://renfeng.org/posts/ccf-storage-evaluation-2026/</link><pubDate>Mon, 13 Apr 2026 22:27:00 +0800</pubDate><guid>https://renfeng.org/posts/ccf-storage-evaluation-2026/</guid><description>&lt;p&gt;我是 CCF 信息存储专委会存储测试工作组成员。欢迎对 Mooncake 传输引擎感兴趣的厂商参与相关存储测试与技术交流（尽管这里的存储更多是指 SSD 等外存）。&lt;/p&gt;
