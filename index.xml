@@ -1,4 +1,23 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Feng Ren</title><link>https://renfeng.org/</link><description>Recent content on Feng Ren</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Mon, 13 Apr 2026 22:27:00 +0800</lastBuildDate><atom:link href="https://renfeng.org/index.xml" rel="self" type="application/rss+xml"/><item><title>CCF Storage Evaluation 2026 is Coming</title><link>https://renfeng.org/posts/ccf-storage-evaluation-2026/</link><pubDate>Mon, 13 Apr 2026 22:27:00 +0800</pubDate><guid>https://renfeng.org/posts/ccf-storage-evaluation-2026/</guid><description>&lt;p&gt;我是 CCF 信息存储专委会存储测试工作组成员。欢迎对 Mooncake 传输引擎感兴趣的厂商参与相关存储测试与技术交流（尽管这里的存储更多是指 SSD 等外存）。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Feng Ren</title><link>https://renfeng.org/</link><description>Recent content on Feng Ren</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Fri, 24 Apr 2026 15:00:00 +0800</lastBuildDate><atom:link href="https://renfeng.org/index.xml" rel="self" type="application/rss+xml"/><item><title>TENT Internal #1: The Architecture</title><link>https://renfeng.org/posts/tent-internal-arch/</link><pubDate>Fri, 24 Apr 2026 15:00:00 +0800</pubDate><guid>https://renfeng.org/posts/tent-internal-arch/</guid><description>&lt;h2 id="引子"&gt;引子&lt;/h2&gt;
+&lt;p&gt;我在多种场合写过很多汇报材料，回顾了 AI Stor 的发展历程：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;2024 年是 P/D（Prefill/Decode）分离的元年，通过在物理或逻辑层面解耦算力密集型的预填充阶段与访存密集型的生成阶段，我们初步解决了推理吞吐量与时延之间的固有矛盾。&lt;strong&gt;这一年 Mooncake 从一篇 arXiv 论文成长为一个可以跑的开源项目。&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;2025 年是 KVCache 大规模应用的一年，业界通过存储解耦架构确立了“以存储换计算”的范式，KVCache 不再是即用即弃的中间变量，而是升级为驱动推理服务的核心状态资产。&lt;strong&gt;这一年 Mooncake 从 vLLM 的简单适配，走向了多推理框架、多型号 GPU、多应用场景的覆盖。&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;2026 年则是智能体（Agent）爆发的一年，相信大家在这四个月里看到了，大模型正从单纯的语义生成引擎进化为具备长程规划能力的“推理中枢”，驱动着更长序列、更高频率互动的任务闭环。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;那么，作为一个 Storage for AI 的研究者，我是怎么看待这个问题的呢？&lt;/p&gt;
+&lt;h3 id="状态数据不止-kvcache"&gt;状态数据：不止 KVCache&lt;/h3&gt;
+&lt;p&gt;KVCache 已由暂态数据演化为跨阶段复用的核心存储资产。比方说，现在大模型推理的标配“上下文记忆”很大程度要归功于池化的 KVCache 存储。另外，KVCache 在多轮对话和 AI 辅助编程等场景中有很高的缓存命中率。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;以 Kimi (Moonshot AI) 为例，其生产环境中的 KVCache 典型命中率已高达 90%。这种极致的复用效率直接将用户的实际计费成本压低至市场标准价的 25%，在商业层面极具竞争力。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;然而，2026 年智能体范式下的“状态资产”正呈现出更复杂的形态：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;**在线强化学习（Online RL）流水线中的模型权重更新。**根据 Kimi Team 的技术报告，在线 RL 需要在模型采样（Rollout）的过程中，以微秒级的精度同步数千亿参数的梯度或权重，以避免采样任务因等待模型刷新而停顿 。在 Moonshot Checkpoint Engine 的典型场景下，这些频繁的参数下发同样表现为极高密度的“全量同步大象流（Elephant Flows）” 。&lt;/li&gt;
+&lt;li&gt;**MoE（专家混合模型）中的专家并行（Expert Parallelism, EP）。**在 MoE 架构中，Token 需要在不同的专家（Expert）之间频繁穿梭。这种专家并行流量（Mice flows）通常只有几十 KB，但它们正处于推理的执行关键路径上。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="链路不止-rdma"&gt;链路：不止 RDMA&lt;/h3&gt;
+&lt;p&gt;从链路的角度上来说，多种物理特性迥异的存储介质（如DRAM、GPU/NPU显存、NVMe SSD等）及多种高速互联技术（如 NVLink、RDMA、CXL等）共同构成了复杂的非均质存储互联系统（Heterogeneous Storage Interconnect）。&lt;/p&gt;</description></item><item><title>CCF Storage Evaluation 2026 is Coming</title><link>https://renfeng.org/posts/ccf-storage-evaluation-2026/</link><pubDate>Mon, 13 Apr 2026 22:27:00 +0800</pubDate><guid>https://renfeng.org/posts/ccf-storage-evaluation-2026/</guid><description>&lt;p&gt;我是 CCF 信息存储专委会存储测试工作组成员。欢迎对 Mooncake 传输引擎感兴趣的厂商参与相关存储测试与技术交流（尽管这里的存储更多是指 SSD 等外存）。&lt;/p&gt;
 &lt;p&gt;I am a member of the CCF Storage Evaluation Working Group. We welcome vendors interested in the Mooncake Transfer Engine to participate in our storage testing initiatives and technical exchanges.&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;一并转发通知（“存储前沿技术评论”公众号）。&lt;/p&gt;
@@ -10,6 +29,6 @@
 &lt;p&gt;&lt;strong&gt;结果发布：&lt;/strong&gt; 第32届CCF全国信息存储技术学术会议，2026年9月（天津）。测试结果也会发布在下面站点。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;工具获取：&lt;/strong&gt; &lt;a href="https://ses.ccf.org.cn/"&gt;https://ses.ccf.org.cn/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;打开网址后点击”测试场景”标签，选择各个测试场景后，从展开的测试用例表格中下载说明文件和测试工具。目前几个场景每一行测试用例的下载内容相同，只需选择一行下载即可。&lt;/p&gt;
-&lt;p&gt;联系方式：张武生, &lt;a href="mailto:zws@tsinghua.edu.cn"&gt;zws@tsinghua.edu.cn&lt;/a&gt;。&lt;/p&gt;</description></item><item><title>About Me</title><link>https://renfeng.org/about/</link><pubDate>Sat, 11 Apr 2026 17:18:53 +0800</pubDate><guid>https://renfeng.org/about/</guid><description>&lt;p&gt;I am an independent researcher and a co-founder of the &lt;a href="https://github.com/kvcache-ai/Mooncake"&gt;Mooncake&lt;/a&gt; project, where I serve as the lead architect and codeowner of the Mooncake Transfer Engine (aka Mooncake TE). My work primarily focuses on building high-performance systems and optimizing distributed infrastructures for the LLM era.&lt;/p&gt;
+&lt;p&gt;联系方式：张武生, &lt;a href="mailto:zws@tsinghua.edu.cn"&gt;zws@tsinghua.edu.cn&lt;/a&gt;。&lt;/p&gt;</description></item><item><title>About Me</title><link>https://renfeng.org/about/</link><pubDate>Sat, 11 Apr 2026 17:18:53 +0800</pubDate><guid>https://renfeng.org/about/</guid><description>&lt;p&gt;I am a co-founder of the &lt;a href="https://github.com/kvcache-ai/Mooncake"&gt;Mooncake&lt;/a&gt; project, where I&amp;rsquo;m the author of Mooncake Transfer Engine (aka Mooncake TE). My work primarily focuses on building high-performance systems and optimizing distributed infrastructures for the LLM era.&lt;/p&gt;
 &lt;p&gt;I earned my PhD from the Department of Computer Science, Tsinghua University, where I spent years deep-diving into system architecture and RDMA-based networking.&lt;/p&gt;
 &lt;p&gt;I am driven by the belief that &amp;ldquo;engineering excellence is the foundation of great research.&amp;rdquo; Currently, I am based in Beijing, China, but I am always open to global technical exchange.&lt;/p&gt;</description></item><item><title>The Evolution of Mooncake Transfer Engine</title><link>https://renfeng.org/posts/evolution-of-mooncake-transfer-engine/</link><pubDate>Sat, 11 Apr 2026 17:18:53 +0800</pubDate><guid>https://renfeng.org/posts/evolution-of-mooncake-transfer-engine/</guid><description>This post provides a retrospective on the architectural evolution of the Mooncake Transfer Engine, tracing its transition from an initial prototype to a production-grade framework.</description></item></channel></rss>
