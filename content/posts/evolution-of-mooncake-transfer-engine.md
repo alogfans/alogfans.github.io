@@ -3,6 +3,7 @@ date: '2026-04-11T17:18:53+08:00'
 title: 'The Evolution of Mooncake Transfer Engine'
 description: "This post provides a retrospective on the architectural evolution of the Mooncake Transfer Engine, tracing its transition from an initial prototype to a production-grade framework."
 comments: true
+draft: true
 ---
 
 ## 1. Introduction: The Paradigm Shift in Inference Architecture

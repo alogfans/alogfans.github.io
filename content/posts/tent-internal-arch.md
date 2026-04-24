@@ -36,7 +36,7 @@ KVCache 已由暂态数据演化为跨阶段复用的核心存储资产。比方
 
 ![](/images/tent-internal-arch/prfaas.png)
 
-> 参考：https://arxiv.org/pdf/2604.15039
+> 参考：[Prefill-as-a-Service: KVCache of Next-Generation Models Could Go Cross-Datacenter](https://arxiv.org/pdf/2604.15039)
 
 ## Mooncake TE 看起来挺好？
 这里我相信大家通过各种方式了解了 Mooncake TE 的架构。其实它的架构十分简单，这源于早期设计哲学的一连串反应。
@@ -117,7 +117,7 @@ TENT 通过解耦架构实现了从逻辑意图到物理执行的精密转化：
 
 ![](/images/tent-internal-arch/tent-arch.png)
 
-> 上图节选自我们近期发表的技术报告：https://arxiv.org/pdf/2604.00368
+> 上图节选自[我们近期发表的技术报告](https://arxiv.org/pdf/2604.00368)
 
 ### 统一段表示
 我们首先将 DRAM、HBM、Disk 全部抽象为 Unified Segment。对于上层应用（KVCache, Checkpoint）而言，数据不再存储在某个具体的“显存地址”或“文件路径”下，而是一个逻辑上的 Segment。TENT 内部也维护了 Segment Manager，用来记录 Segment 与底层物理介质的映射关系。
