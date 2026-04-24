@@ -26,7 +26,7 @@ KVCache 已由暂态数据演化为跨阶段复用的核心存储资产。比方
 ### 链路：不止 RDMA
 从链路的角度上来说，多种物理特性迥异的存储介质（如DRAM、GPU/NPU显存、NVMe SSD等）及多种高速互联技术（如 NVLink、RDMA、CXL等）共同构成了复杂的非均质存储互联系统（Heterogeneous Storage Interconnect）。
 
-![](images/tent-internal-arch/ai-cluster-topology.png)
+![](/images/tent-internal-arch/ai-cluster-topology.png)
 
 这里我们拿一个典型的超节点拓扑举例说明。每个推理服务器上有 8 张 GPU ，它们之间通过 NVLink 或者 Ascend UB 等 Scale-up 高速互联协议连接，带宽通常达到数百 GB/s 的水平。对于GB200等超节点来讲，NVLink 可以跨越推理服务器，在一个 rack 上实现所有 GPU 的互联。有时候 CXL 等也可以当做 Scale-up 网络使用。所以，这本质是机内或者 rack 内的网络。
 
@@ -34,7 +34,7 @@ KVCache 已由暂态数据演化为跨阶段复用的核心存储资产。比方
 
 有意思的是，有时边界甚至会跨越机房。比方说最近 Kimi 和我们团队一起提出的 PrfaaS（媒体称之为“算力预制菜”）技术，它的主要思想是让一部分 Prefill 任务和 Decode 任务在两个数据中心下运行，两个数据中心之间最多只有以太网专线。
 
-![](images/tent-internal-arch/prfaas.png)
+![](/images/tent-internal-arch/prfaas.png)
 
 > 参考：https://arxiv.org/pdf/2604.15039
 
@@ -115,7 +115,7 @@ int tent_submit(tent_engine_t engine, tent_batch_id_t batch_id,
 ## TENT 架构
 TENT 通过解耦架构实现了从逻辑意图到物理执行的精密转化：应用层利用声明式 API 表达 Segment 为核心的存取意图与 SLO 约束，彻底屏蔽了底层硬件参数；编排层作为系统大脑，利用 Segment Manager 检索多维元数据（包含拓扑权重与异构协议凭证），在运行时通过“晚期绑定”动态求解最优传输计划；最终，统一传输后端层将任务细粒度切片，并基于实时遥测数据执行切片喷淋（Spraying），将数据流并行分发至 RDMA、NVLink 或 io_uring 等物理链路，确保物理执行在复杂非均质环境下能够确定性地满足上层业务的目标。
 
-![](images/tent-internal-arch/tent-arch.png)
+![](/images/tent-internal-arch/tent-arch.png)
 
 > 上图节选自我们近期发表的技术报告：https://arxiv.org/pdf/2604.00368
 
@@ -124,7 +124,7 @@ TENT 通过解耦架构实现了从逻辑意图到物理执行的精密转化：
 
 如下图所示，TENT 将物理上分散、异构的内存资源（虚拟地址空间）转化为系统可调度、可互操作的逻辑对象。与 Mooncake TE 一样，Segment 由一组 Buffer 组成，散落在不同 CPU 节点的 DRAM（`cpu:0`, `cpu:1`）以及 GPU 的 VRAM（`cuda:0`）中。它们被聚合进一个具有全局唯一标识的元数据对象（如 `name: node050:12345`）。应用层只需持有这个“逻辑句柄”，即可进行跨介质的操作。对于文件或者其它有独立地址空间的对象，由专门的 Segment 进行组织，格式是一样的。
 
-![](images/tent-internal-arch/segment-metadata.png)
+![](/images/tent-internal-arch/segment-metadata.png)
 
 在实现中，Segment 的元数据通过三个关联分支，为编排器的自主决策提供了完整的信息支撑。
 

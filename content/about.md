@@ -4,7 +4,7 @@ title: 'About Me'
 comments: true
 ---
 
-I am a co-founder of the [Mooncake](https://github.com/kvcache-ai/Mooncake) project, where I'm the author of Mooncake Transfer Engine (aka Mooncake TE). My work primarily focuses on building high-performance systems and optimizing distributed infrastructures for the LLM era.
+I am a co-founder of the [Mooncake](https://github.com/kvcache-ai/Mooncake) project, and the author of Mooncake Transfer Engine (aka Mooncake TE). My work primarily focuses on building high-performance systems and optimizing distributed infrastructures for the LLM era.
 
 I earned my PhD from the Department of Computer Science, Tsinghua University, where I spent years deep-diving into system architecture and RDMA-based networking.
 
