@@ -245,12 +245,14 @@ TENT 通过 Transport 抽象基类定义了所有传输后端必须实现的统�
 
 | 传输协议 | 覆盖范围 | 零拷贝 (Zero-copy) | CPU 参与度 | 适用介质 |
 | --- | --- | --- | --- | --- |
-| **NVLink** | 机内 / 超节点 | 原生支持 | 极低 | GPU HBM $\leftrightarrow$ GPU HBM |
-| **SHM / CXL** | 单机进程间 | 原生支持 | 中 | DRAM $\leftrightarrow$ DRAM |
+| **NVLink** | 机内 / 超节点 | 原生支持 | 极低 | GPU HBM ↔ GPU HBM |
+| **SHM / CXL** | 单机进程间 | 原生支持 | 中 | DRAM ↔ DRAM |
 | **RDMA** | 跨节点集群 | 原生支持 | 极低 | DRAM / HBM 混合存取 |
-| **AscendDirect** | 昇腾专有链路 | 原生支持 | 极低 | NPU HBM $\leftrightarrow$ NPU HBM |
-| **GDS** | 本地 / 存储网 | 原生支持 | 极低 | GPU HBM $\leftrightarrow$ NVMe SSD |
-| **IO_URING** | 本地存储 | 不支持 | 中 | DRAM $\leftrightarrow$ NVMe / HDD |
+| **AscendDirect** | 昇腾专有链路 | 原生支持 | 极低 | NPU HBM ↔ NPU HBM |
+| **GDS** | 本地 / 存储网 | 原生支持 | 极低 | GPU HBM ↔
+↔ NVMe SSD |
+| **IO_URING** | 本地存储 | 不支持 | 中 | DRAM ↔
+↔ NVMe / HDD |
 | **TCP** | 全局通用 | 不支持 | 高 | 最通用 |
 
 
