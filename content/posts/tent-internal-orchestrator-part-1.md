@@ -249,10 +249,8 @@ TENT 通过 Transport 抽象基类定义了所有传输后端必须实现的统�
 | **SHM / CXL** | 单机进程间 | 原生支持 | 中 | DRAM ↔ DRAM |
 | **RDMA** | 跨节点集群 | 原生支持 | 极低 | DRAM / HBM 混合存取 |
 | **AscendDirect** | 昇腾专有链路 | 原生支持 | 极低 | NPU HBM ↔ NPU HBM |
-| **GDS** | 本地 / 存储网 | 原生支持 | 极低 | GPU HBM ↔
-↔ NVMe SSD |
-| **IO_URING** | 本地存储 | 不支持 | 中 | DRAM ↔
-↔ NVMe / HDD |
+| **GDS** | 本地 / 存储网 | 原生支持 | 极低 | GPU HBM ↔ NVMe SSD |
+| **IO_URING** | 本地存储 | 不支持 | 中 | DRAM ↔ NVMe / HDD |
 | **TCP** | 全局通用 | 不支持 | 高 | 最通用 |
 
 
