@@ -1,5 +1,5 @@
 ---
-date: '2026-05-09T15:00:00+08:00'
+date: '2026-05-09T14:00:00+08:00'
 title: 'TENT Internal #2: The Orchestrator (Part 1)'
 description: ""
 comments: true
