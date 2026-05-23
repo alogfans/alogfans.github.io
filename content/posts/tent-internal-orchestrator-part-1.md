@@ -28,9 +28,9 @@ comments: true
 ```cpp
 // tent/include/tent/runtime/segment.h
 
-// 段描述符：Segment 的顶层结构 
+// 段描述符：Segment 的顶层结构
 struct SegmentDesc {
-  std::string name;              // 全局唯一标识符，可以是主机名（带端口号）      
+  std::string name;              // 全局唯一标识符，可以是主机名（带端口号）
   SegmentType type;              // Memory | File
   std::string machine_id;        // 所属节点 ID
   std::string rpc_server_addr;   // 元数据服务地址
@@ -51,7 +51,7 @@ struct MemorySegmentDesc {
 struct DeviceDesc {
   std::string name;         // 设备名，如"mlx5_0"
   std::unordered_map<TransportType, std::string> transport_attrs;
-                            // 传输协议特定属性（如对于 RDMA 而言，包括 GID）  
+                            // 传输协议特定属性（如对于 RDMA 而言，包括 GID）
 };
 
 // 内存段中一个连续的区间
@@ -60,7 +60,7 @@ struct BufferDesc {
   uint64_t length;          // 长度
   std::string location;     // 位置，与拓扑信息匹配构建优选的设备列表
   std::vector<TransportType> transports;  // 支持的 Transport 列表
-  // 传输协议特定属性（如对于 RDMA 而言，包括 rkey）                              
+  // 传输协议特定属性（如对于 RDMA 而言，包括 rkey）
   std::unordered_map<TransportType, std::string> transport_attrs;
 };
 ```
@@ -74,7 +74,7 @@ TENT 所用的 `Topology` 建立了协议无关的通用拓扑模型。
 
 ```cpp
 class Topology {
-  public:         
+  public:
       // 亲和性层级数量
       const static size_t DevicePriorityRanks = 3;
       enum NicType { NIC_RDMA, NIC_TCP, NIC_UNKNOWN };
@@ -89,16 +89,16 @@ class Topology {
           std::string name;        // 如 cuda:0，与前面 location 匹配
           std::string pci_bus_id;
           MemType type;
-          int numa_node; 
+          int numa_node;
           // 按 affinity tier 分层的设备列表
           std::vector<NicID> device_list[DevicePriorityRanks];
           // device_list[0]: Tier-1 (原生高速路径)
-          // device_list[1]: Tier-2 (跨 PCIe 根节点) 
-          // device_list[2]: Tier-3 (跨 NUMA 节点) 
+          // device_list[1]: Tier-2 (跨 PCIe 根节点)
+          // device_list[2]: Tier-3 (跨 NUMA 节点)
       };
       // 自动发现：枚举系统中的 GPU、NIC、NUMA 关系
       Status discover(const std::vector<Platform*>& platforms);
-  }; 
+};
 ```
 
 在初始化阶段，TENT 会通过自动化拓扑发现来填充这些层级结构。它会枚举所有可用资源，并将它们的互联链路划分为与协议无关的亲和性层级（Affinity Tiers）：
@@ -119,63 +119,53 @@ class Topology {
 TENT 通过 `Transport` 抽象基类定义了所有传输后端必须实现的统一接口。这个抽象层将上层应用逻辑与底层传输协议完全解耦，使得系统能够在运行时动态选择最优的传输路径。上层应用只需调用 submitTransferTasks 发起传输，无需关心底层使用 RDMA、NVLink 还是其他协议。传输层的选择、优化、故障处理由 TENT 引擎自动完成。
 
 ```cpp
-  // tent/include/tent/runtime/transport.h                                                            
-                                                                                                      
-  // 传输能力描述                                                                                     
-  struct Capabilities {                                                                               
-      bool dram_to_dram;   // 主机到主机传输                                                          
-      bool dram_to_gpu;    // 主机到 GPU 传输                                                         
-      bool gpu_to_dram;    // GPU 到主机传输                                                          
-      bool gpu_to_gpu;     // GPU 到 GPU 传输 
-      bool dram_to_file;   // 主机到存储设备传输
-      bool gpu_to_file;    // GPU 到存储设备传输                                                      
-  };                                                                                                  
-                                                                                                      
-  class Transport {                                                                                   
-  public:                                                                                             
-      // 子批次：传输任务的最小调度单元                                                               
-      struct SubBatch {                                                                               
-          virtual ~SubBatch() {}                                                                      
-          virtual size_t size() const = 0;                                                            
-      };                                                                                              
-                                                                                                      
-      using SubBatchRef = SubBatch*;                                                                  
-                                                                                                      
-      // === 批次管理 ===                                                                             
-      virtual Status allocateSubBatch(SubBatchRef& batch, size_t max_size);
-      virtual Status freeSubBatch(SubBatchRef& batch);                                                
-                                                                                                      
-      // === 传输操作 ===                                                                             
-      virtual Status submitTransferTasks(SubBatchRef batch,                                           
-                                         const std::vector<Request>& request_list);                   
-      virtual Status getTransferStatus(SubBatchRef batch, int task_id,                                
-                                       TransferStatus& status);                                       
-                                                                                                      
-      // === 内存管理 ===                                                                             
-      virtual Status allocateLocalMemory(void** addr, size_t size,                                    
-                                         MemoryOptions& options);                                     
-      virtual Status freeLocalMemory(void* addr, size_t size);                                        
-      virtual bool warmupMemory(void* addr, size_t length);                                           
-      virtual Status addMemoryBuffer(BufferDesc& desc,                                                
-                                     const MemoryOptions& options);                                   
-      virtual Status addMemoryBuffer(std::vector<BufferDesc>& desc_list,                              
-                                     const MemoryOptions& options);                                   
-      virtual Status removeMemoryBuffer(BufferDesc& desc);                                            
-                                                                                                      
-      // === 通知机制（可选） ===                                                                     
-      virtual bool supportNotification() const;                                                       
-      virtual Status sendNotification(SegmentID target_id,                                            
-                                      const Notification& notify);                                    
-      virtual Status receiveNotification(std::vector<Notification>& notify_list);                     
-                                                                                                      
-      // === 能力查询 ===                                                                             
-      virtual const Capabilities capabilities() const;                                                
-      virtual const char* getName() const;                                                            
-                  
-  protected:
-      Capabilities caps;
-  };
+// tent/include/tent/runtime/transport.h
 
+// 传输能力描述
+struct Capabilities {
+    bool dram_to_dram;   // 主机到主机传输
+    bool dram_to_gpu;    // 主机到 GPU 传输
+    bool gpu_to_dram;    // GPU 到主机传输
+    bool gpu_to_gpu;     // GPU 到 GPU 传输
+    bool dram_to_file;   // 主机到存储设备传输
+    bool gpu_to_file;    // GPU 到存储设备传输
+};
+
+class Transport {
+  public:
+      // 子批次：传输任务的最小调度单元
+      struct SubBatch {
+          virtual ~SubBatch() {}
+          virtual size_t size() const = 0;
+      };
+
+      using SubBatchRef = SubBatch*;
+
+      // === 批次管理 ===
+      virtual Status allocateSubBatch(SubBatchRef& batch, size_t max_size);
+      virtual Status freeSubBatch(SubBatchRef& batch);
+
+      // === 传输操作 ===
+      virtual Status submitTransferTasks(SubBatchRef batch,
+                                         const std::vector<Request>& request_list);
+      virtual Status getTransferStatus(SubBatchRef batch, int task_id,
+                                       TransferStatus& status);
+
+      // === 内存管理 ===
+      virtual Status allocateLocalMemory(void** addr, size_t size,
+                                         MemoryOptions& options);
+      virtual Status freeLocalMemory(void* addr, size_t size);
+      virtual bool warmupMemory(void* addr, size_t length);
+      virtual Status addMemoryBuffer(BufferDesc& desc,
+                                     const MemoryOptions& options);
+      virtual Status addMemoryBuffer(std::vector<BufferDesc>& desc_list,
+                                     const MemoryOptions& options);
+      virtual Status removeMemoryBuffer(BufferDesc& desc);
+
+      // === 通知机制（可选） ===
+      virtual bool supportNotification() const;
+      virtual Status sendNotification(SegmentID target_id,
+                                      const Notification& notify);
       virtual Status receiveNotification(std::vector<Notification>& notify_list);
 
       // === 能力查询 ===
@@ -184,7 +174,7 @@ TENT 通过 `Transport` 抽象基类定义了所有传输后端必须实现的�
 
   protected:
       Capabilities caps;
-  };
+};
 ```
 
 - **批次管理** ：`SubBatch` 是传输任务的最小调度单元。`allocateSubBatch` 创建批次容器，`freeSubBatch` 释放资源。批量设计允许传输层对多个请求进行合并优化。
@@ -210,21 +200,22 @@ TENT 通过 `Transport` 抽象基类定义了所有传输后端必须实现的�
 | **IO_URING** | 本地存储 | 不支持 | 中 | DRAM ↔ NVMe / HDD |
 | **TCP** | 全局通用 | 不支持 | 高 | 最通用 |
 
-
 #### Scale-out 扩展网络：跨节点高性能基石
-- RDMA (IB/RoCE)：专为大规模集群设计。利用零拷贝（Zero-copy）与内核旁路（Kernel Bypass）技术，提供微秒级延迟与极高的聚合带宽，是跨节点数据平移的核心路径。
-- AscendDirect：针对华为昇腾（Ascend）生态深度优化。通过适配 HIXL 框架，实现 NPU 间的高效互连，充分发挥国产算力平台的传输特性。
+- **RDMA (IB/RoCE)：** 专为大规模集群设计。利用零拷贝与内核旁路技术，提供微秒级延迟与极高的聚合带宽，是跨节点数据平移的核心路径。
+- **AscendDirect：** 针对华为昇腾（Ascend）生态深度优化。通过适配 HIXL 框架，实现 NPU 间的高效互连，充分发挥国产算力平台的传输特性。
+
 #### Scale-up 增强网络：机内/超节点极致互连
-- NVLink：NVIDIA GPU 间的顶级通信方案。支持机内（Intra-Node）与跨机（Inter-Node）两种子后端，通过 GPU-Direct 技术实现无需 CPU 参与的最高带宽数据交换，是模型并行流量的首选。
+- **NVLink：** NVIDIA GPU 间的顶级通信方案。支持机内与跨机两种子后端，通过 GPU-Direct 技术实现无需 CPU 参与的最高带宽数据交换，是模型并行流量的首选。
+
 #### 存储与文件系统
-- GDS (GPUDirect Storage)：实现显存与存储间的“高速直达”。通过绕过主机 CPU 与系统内存缓冲区，数据直接在 NVMe 存储与 GPU 之间流转，极大提升了 I/O 密集型任务的效率。
-- IO_URING：利用 Linux 最新的高性能异步 I/O 原语。有效降低系统调用开销，为本地存储访问提供非阻塞、高吞吐的存取支撑。
+- **GDS (GPUDirect Storage)：** 实现显存与存储间的”高速直达”。通过绕过主机 CPU 与系统内存缓冲区，数据直接在 NVMe 存储与 GPU 之间流转，极大提升了 I/O 密集型任务的效率。
+- **IO_URING：** 利用 Linux 最新的高性能异步 I/O 原语。有效降低系统调用开销，为本地存储访问提供非阻塞、高吞吐的存取支撑。
+
 #### 通用协议
-- TCP/IP：系统的“保底”传输方案。具备极致的通用性与部署灵活性，确保 TENT 在复杂网络环境或跨数据中心场景下依然能实现逻辑连通。
-- SHM / CXL：通过共享内存（Shared Memory）或 CXL 协议实现近乎“零开销”的数据交换，是机内或超节点状态同步与快速数据共享的最短路径。
+- **TCP/IP：** 系统的”保底”传输方案。具备极致的通用性与部署灵活性，确保 TENT 在复杂网络环境或跨数据中心场景下依然能实现逻辑连通。
+- **SHM / CXL：** 通过共享内存或 CXL 协议实现近乎”零开销”的数据交换，是机内或超节点状态同步与快速数据共享的最短路径。
 
-
-## 2. 晚期绑定（Late Binding）
+## 2. 晚期绑定
 在传统的 Mooncake TE v1 或 NIXL 架构中，传输路径是在初始化或连接建立阶段确定的（早期绑定），这类似于在公路旅行开始前就选定了死板的固定线路，一旦途中发生拥堵或封路，系统就会陷入瘫痪。TENT 的动态编排核心在于将路径解析推迟到传输请求提交的瞬间，即所谓的“晚期绑定” 。
 
 当应用程序通过声明式接口提交一个传输意图（如 KVCache 迁移）并获取一个不透明的批处理句柄时，编排器开始进行“无状态解析” 。由于应用层不再持有任何 stateful 的端点句柄，编排器拥有绝对的自由度来根据瞬时状态重写执行计划。
@@ -256,8 +247,3 @@ $$T_{total} \approx \sum T_{startup} + \max(T_{D2H}, T_{H2H}, T_{H2D}) \times n$
 ## 4. 结论
 通过对 TENT 第一阶段动态编排逻辑的深度解析，我们可以得出结论：现代 LLM 服务的基础设施必须从“静态通信库”转向“自治编排平面” 。TENT 将元数据抽象和传输插件视为认知输入，通过晚期绑定解决了路径选择的僵化问题，通过自主路径合成弥合了异构互连的物理裂痕 。在生产环境的验证中，这种编排逻辑直接转化为 SGLang HiCache 吞吐量 1.36 倍的提升以及 P90 TTFT 26% 的下降 。更重要的是，它将曾经需要人工干预的硬件故障和拓扑限制，降级为数据面内部透明的重路由事件 。随着生成式 AI 进入智能体和超长上下文的时代，这种能够动态、弹性、弹性地管理集群带宽资产的编排引擎，必将成为 disaggregated AI 架构的基石 。
 
-（未完待续）
-
----
-
-这是一个系列，后面争取不断更！欢迎大家在下面的评论区交流 :)

@@ -33,15 +33,15 @@ markup:
       passthrough:
         delimiters:
           block:
-          - - \[
-            - \]
-          - - $$
-            - $$
+            - - \[
+              - \]
+            - - $$
+              - $$
           inline:
-          - - \(
-            - \)
-          - - $
-            - $
+            - - \(
+              - \)
+            - - $
+              - $
         enable: true
 
 menu:
