@@ -3,6 +3,7 @@ date: '2026-05-20T10:00:00+08:00'
 title: 'TENT Internal #3: The Orchestrator (Part 2)'
 description: ""
 comments: true
+math: true
 ---
 
 在多租户、高并发的分布式存储系统中，如何高效利用多轨 RDMA 网络带宽，同时保障不同优先级请求的服务质量，是一个极具挑战性的问题。Mooncake 采用了简单的 Round-Robin 法则进行分配，无法依据网络的实际情况进行优化调度。Mooncake TENT 通过 Slice Spraying（分片喷射）和 QoS（服务质量） 两大机制，巧妙地解决了这个问题。
@@ -52,9 +53,9 @@ for (size_t rank = 0; rank < Topology::DevicePriorityRanks; ++rank) {
 为了应对基线实现的局限性，Mooncake TENT 尝试引入一套基于自适应反馈的智能调度算法。这套算法的核心思想是通过估计请求到每个目标网卡预期的送达时间，选择一个尽可能快的本地网卡进行交付。远端网卡则采用与 Mooncake TE 相似的原则，在满足 rank 匹配的情况下尽可能一比一匹配。
 
 在这个版本中，本地每张网卡的预期送达时间做此估计：
-```
-predicted_time = weight * ((inflight_bytes + request_bytes) / bandwidth × beta1 + beta0)
-```
+$$
+predicted_time = weight \times ((inflight\_bytes + request\_bytes) / bandwidth \times \beta_1 + \beta_0)
+$$
 该算法采用了一个双参数模型来预测传输时间：beta0 表示固定延迟（如 PCIe 传输开销、连接建立时间等），beta1 表示有效带宽的修正系数。weight 是一个常量，当本地存储介质和网卡的距离（NUMA等）较长时，会通过较高的系数降低对该卡的选择几率。对于每个待处理的传输请求，系统会计算所有候选设备的预测完成时间，并选择表现最优的那个。预测公式综合考虑了当前设备的活跃负载、理论带宽，以及通过历史学习得到的修正参数。
 
 为了保证参数能够适应不断变化的网络条件，算法实现了一套精细的更新机制。每当一次传输完成，系统会记录实际耗时与预测时间的差异，并采用指数平滑的方式更新每张网卡分别对应的 beta0 和 beta1 参数。
@@ -66,9 +67,9 @@ predicted_time = weight * ((inflight_bytes + request_bytes) / bandwidth × beta1
 在总结了早期实现的得失之后，我们提出了一种回归本质的优化方案。新方案的核心思想是：简化模型，保留精髓，增强可扩展性。
 
 本地每张网卡的预期送达时间做此估计：
-```
-predicted_time = (inflight_bytes + request_bytes) / ewma_bandwidth * weight
-```
+$$
+predicted\_time = \frac{inflight\_bytes + request\_bytes}{ewma\_bandwidth} \times weight
+$$
 注意，我们不再使用容易放大偏差的 beta0、beta1 双参数了。相反，我们将其简化为单一的 EWMA 带宽估计。每个设备只需维护一个带宽估计值，每当传输完成时，系统根据观测到的实际带宽更新这个估计值。
 为了防止估计值偏离合理范围，系统还设置了边界限制，将 EWMA 值约束在理论带宽的 10% 到 1000% 之间。这种保守的设计确保了即使出现异常观测，系统也不会做出过于极端的决策。
 
@@ -123,7 +124,7 @@ Mooncake TENT 的 QoS 机制提供了丰富的配置选项，允许运维人员�
 
 ![](/images/tent-internal-slice-spraying-and-qos/qos.png)
 
-我们在 H20 测试床上评估了 TENT 的 QoS 能力。实验使用两个并发进程，每个进程采用 8 个提交线程以跑满 $4\times$ 400 Gbps 的 RoCE 网络。第一个进程发起对延迟敏感的“老鼠流”（64 KB 的元数据同步，始终设为高优先级），第二个进程则产生重吞吐的“大象流”（64 MB 的 KVCache 迁移）。我们对比了四种配置：No QoS（无 QoS）、QoS (High+Medium)（高+中优先级 QoS）、QoS (High+Low)（高+低优先级 QoS）以及 Solo（单任务独占）执行基线。高优先级意图利用优先级时段轮转机制进行传输，同时主动抑制低优先级流量，以保持较低的物理队列深度。
+我们在 H20 测试床上评估了 TENT 的 QoS 能力。实验使用两个并发进程，每个进程采用 8 个提交线程以跑满 $4 \times 400$ Gbps 的 RoCE 网络。第一个进程发起对延迟敏感的”老鼠流”（64 KB 的元数据同步，始终设为高优先级），第二个进程则产生重吞吐的”大象流”（64 MB 的 KVCache 迁移）。我们对比了四种配置：No QoS（无 QoS）、QoS (High+Medium)（高+中优先级 QoS）、QoS (High+Low)（高+低优先级 QoS）以及 Solo（单任务独占）执行基线。高优先级意图利用优先级时段轮转机制进行传输，同时主动抑制低优先级流量，以保持较低的物理队列深度。
 
 结果表明，老鼠流的 P50 延迟降低了 15.1%。这主要是通过有意的时段限流来缓解进程间竞争实现的。该能力的实现得益于引擎的优先级时段轮转机制——它在向高优先级分片倾斜的同时，依然确保了整体传输能持续推进，从而防止低优先级流量发生饥饿。值得注意的是，P99 延迟保持了稳定，这是因为当设备轮转到“接受低优先级”状态时，它会接收所有分片而不论其优先级如何，从而确保高优先级意图绝不会被后台流量无限期地卡死。这些结果证实，TENT 具备 QoS 感知的 Slice Spraying 技术能够有效优先处理对延迟敏感的关键老鼠流（例如 MoE 专家并行流量），直接有助于缩短整体的首字延迟（TTFT）。
 

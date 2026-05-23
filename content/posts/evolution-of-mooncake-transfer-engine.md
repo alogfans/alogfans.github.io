@@ -4,6 +4,7 @@ title: 'The Evolution of Mooncake Transfer Engine'
 description: "This post provides a retrospective on the architectural evolution of the Mooncake Transfer Engine, tracing its transition from an initial prototype to a production-grade framework."
 comments: true
 draft: true
+math: true
 ---
 
 ## 1. Introduction: The Paradigm Shift in Inference Architecture
@@ -57,8 +58,8 @@ TENT is designed to be hardware-agnostic. Through an abstract Kernel Interface, 
 In early 2026, the core logic of the Mooncake Transfer Engine was officially integrated into the **PyTorch** inference ecosystem. This transition marks the evolution of the engine from a proprietary internal tool to a general-purpose infrastructure for solving LLM inference scalability.
 
 ### 5.1 Key Performance Metrics
-* **Bandwidth Utilization:** In multi-node, multi-card environments, TENT achieves over 90% effective bandwidth utilization.
-* **Throughput Gains:** Under identical hardware conditions, optimizing transmission overlap has resulted in an approximately **115%** increase in total system request throughput.
+* **Bandwidth Utilization:** In multi-node, multi-card environments, TENT achieves over $90\%$ effective bandwidth utilization.
+* **Throughput Gains:** Under identical hardware conditions, optimizing transmission overlap has resulted in an approximately $115\%$ increase in total system request throughput.
 
 ## 6. Conclusion: Engineering-driven System Science
 

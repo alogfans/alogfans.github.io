@@ -249,7 +249,7 @@ TENT 通过 `Transport` 抽象基类定义了所有传输后端必须实现的�
 
 设总长度为 $M$ 的数据被划分为 $n$ 个块，则完成时间 $T_{total}$ 约等于：
 
-$$T_{total} \approx \sum T_{startup} + \max(T_{D2H}, T_{H2H}, T_{H2D}) \cdot n$$
+$$T_{total} \approx \sum T_{startup} + \max(T_{D2H}, T_{H2H}, T_{H2D}) \times n$$
 
 由于 TENT 能够重叠执行连续的阶段（例如，$n$ 块的 RDMA 传输与 $n-1$ 块的本地 PCIe 拷贝并发进行），它极大地掩盖了中间中转的延迟，使合成路径的表现逼近原生直连路径。
 
