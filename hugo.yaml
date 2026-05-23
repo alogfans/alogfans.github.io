@@ -1,11 +1,11 @@
 baseURL: https://renfeng.org/
-defaultContentLanguage: en
+defaultContentLanguage: zh
 title: Feng Ren
 theme: PaperMod
 
 languages:
   en:
-    languageName: English
+    label: English
     weight: 1
     params:
       description: "Storage for AI Research | Founder of Mooncake Transfer Engine"
@@ -13,15 +13,35 @@ languages:
         Title: "Feng Ren"
         Content: >
           Storage for AI Researcher | Founder of [Mooncake Transfer Engine](https://github.com/kvcache-ai/Mooncake)
+    menu:
+      main:
+        - identifier: en-archives
+          name: Archives
+          url: /archives/
+          weight: 10
+        - identifier: en-about
+          name: About
+          url: /about/
+          weight: 20
   zh:
-    languageName: 中文
+    label: 中文
     weight: 2
     params:
       description: "AI 存储系统研究者 | Mooncake 传输引擎创始人"
       homeInfoParams:
-        Title: "任峰"
+        Title: "Feng Ren"
         Content: >
           AI 存储系统研究者 | [Mooncake 传输引擎](https://github.com/kvcache-ai/Mooncake) 创始人
+    menu:
+      main:
+        - identifier: zh-archives
+          name: 归档
+          url: /archives/
+          weight: 10
+        - identifier: zh-about
+          name: 关于
+          url: /about/
+          weight: 20
 
 params:
   comments: true
@@ -29,6 +49,7 @@ params:
     enabled: false
   displayFullLangName: true
   showAllLanguagesInHome: true
+  disableLangToggle: false
   socialIcons:
     - name: "github"
       url: "https://github.com/alogfans"
@@ -62,38 +83,3 @@ markup:
               - $
         enable: true
 
-menu:
-  main:
-    - identifier: archives
-      name: Archives
-      url: /archives/
-      weight: 10
-    - identifier: about
-      name: About
-      url: /about/
-      weight: 20
-
-# 多语言菜单配置
-languages:
-  en:
-    menu:
-      main:
-        - identifier: archives
-          name: Archives
-          url: /archives/
-          weight: 10
-        - identifier: about
-          name: About
-          url: /about/
-          weight: 20
-  zh:
-    menu:
-      main:
-        - identifier: archives
-          name: 归档
-          url: /archives/
-          weight: 10
-        - identifier: about
-          name: 关于
-          url: /about/
-          weight: 20
