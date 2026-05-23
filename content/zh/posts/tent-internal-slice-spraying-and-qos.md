@@ -91,6 +91,8 @@ $$
 
 同时，我们特别为大请求采取了比例分配的策略。对于切片数较多的请求，在可用设备中按一定比例进行分配有助于提升端到端带宽并降低时延。因此，我们不采用”每个 `Slice` 独立决策所用的本地网卡”，而是通过按比例分配给多个候选设备的方法，充分利用了多轨 RDMA 的聚合带宽。比例的选择主要基于前面测量的 $predicted\_time$ 而定。$predicted\_time$ 较小的设备可占据较大的份额。
 
+![](/images/tent-internal-slice-spraying-and-qos/slice-spraying-example.png)
+
 ```cpp
 // 按设备容量比例分配
 double total_weight = sum(c.score for c in candidates);
