@@ -15,11 +15,11 @@ languages:
           Storage for AI Researcher | Founder of [Mooncake Transfer Engine](https://github.com/kvcache-ai/Mooncake)
     menu:
       main:
-        - identifier: en-archives
+        - identifier: archives
           name: Archives
           url: /archives/
           weight: 10
-        - identifier: en-about
+        - identifier: about
           name: About
           url: /about/
           weight: 20
@@ -34,12 +34,12 @@ languages:
           AI 存储系统研究者 | [Mooncake 传输引擎](https://github.com/kvcache-ai/Mooncake) 创始人
     menu:
       main:
-        - identifier: zh-archives
-          name: 归档
+        - identifier: archives
+          name: Archives
           url: /archives/
           weight: 10
-        - identifier: zh-about
-          name: 关于
+        - identifier: about
+          name: About
           url: /about/
           weight: 20
 
