@@ -11,9 +11,9 @@ math: true
 在前面的文章中，我们介绍了 TENT 的架构设计和编排器核心实现。本文将深入探讨 TENT 的两大动态调度机制：**切片喷射（Slice Spraying）**和**服务质量保障（QoS）**。
 
 > **系列导航**：
-> - **TENT Internal #1**：架构设计概览 - 从命令式到声明式的架构演进
-> - **TENT Internal #2**：编排器核心设计 - 晚期绑定与路径合成
-> - **TENT Internal #3**：切片喷射与 QoS 机制（本文）- 动态调度算法与性能优化
+> - **TENT Internal #1**：[架构设计概览](/zh/posts/tent-internal-arch/) - 从命令式到声明式的架构演进
+> - **TENT Internal #2**：[编排器核心设计](/zh/posts/tent-internal-orchestrator-part-1/) - 晚期绑定与路径合成
+> - **TENT Internal #3**：[切片喷射与 QoS 机制](/zh/posts/tent-internal-slice-spraying-and-qos/) - 动态调度算法与性能优化
 
 ### 1.1 算法背景
 

@@ -1,0 +1,22 @@
+{{- if (not site.Params.disableLangToggle) }}
+{{- $lang := .Lang}}
+{{- $separator := false }}
+{{- with site.Home.Translations }}
+<ul class="lang-switch">
+    {{- range . -}}
+    {{- if ne $lang .Lang }}
+    <li>
+        <a href="{{- .Permalink -}}" title="{{ .Language.LanguageName | default (.Lang | title) }}"
+           aria-label="{{ .Language.LanguageName | default (.Lang | title) }}">
+            {{- if site.Params.displayFullLangName (.Language.LanguageName) }}
+            {{- .Language.LanguageName | emojify -}}
+            {{- else }}
+            {{- .Lang | title -}}
+            {{- end }}
+        </a>
+    </li>
+    {{- end }}
+    {{- end }}
+</ul>
+{{- end }}
+{{- end }}

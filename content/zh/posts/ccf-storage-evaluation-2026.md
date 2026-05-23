@@ -10,7 +10,7 @@ comments: true
 I am a member of the CCF Storage Evaluation Working Group. We welcome vendors interested in the Mooncake Transfer Engine to participate in our storage testing initiatives and technical exchanges.
 
 ---
-一并转发通知（“存储前沿技术评论”公众号）。
+一并转发通知（"存储前沿技术评论"公众号）。
 
 CCF信息存储专委会•存储测试工作组关于邀请开展存储测试的通知
 
@@ -26,7 +26,6 @@ CCF信息存储专委会•存储测试工作组关于邀请开展存储测试�
 
 **工具获取：** https://ses.ccf.org.cn/
 
-打开网址后点击”测试场景”标签，选择各个测试场景后，从展开的测试用例表格中下载说明文件和测试工具。目前几个场景每一行测试用例的下载内容相同，只需选择一行下载即可。
+打开网址后点击"测试场景"标签，选择各个测试场景后，从展开的测试用例表格中下载说明文件和测试工具。目前几个场景每一行测试用例的下载内容相同，只需选择一行下载即可。
 
 联系方式：张武生, zws@tsinghua.edu.cn。
-

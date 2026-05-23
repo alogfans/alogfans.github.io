@@ -6,6 +6,11 @@ comments: true
 math: true
 ---
 
+> **系列导航**：
+> - **TENT Internal #1**：[架构设计概览](/zh/posts/tent-internal-arch/) - 从命令式到声明式的架构演进
+> - **TENT Internal #2**：[编排器核心设计](/zh/posts/tent-internal-orchestrator-part-1/) - 晚期绑定与路径合成
+> - **TENT Internal #3**：[切片喷射与 QoS 机制](/zh/posts/tent-internal-slice-spraying-and-qos/) - 动态调度算法与性能优化
+
 ## 1. 编排器架构概览
 
 编排器是 TENT 的核心组件，承担着将应用层的声明式传输意图转化为精确物理执行指令的关键职责。与传统的命令式接口不同，TENT 编排器通过”晚期绑定”机制实现了从配置驱动到意图驱动的根本性转变。

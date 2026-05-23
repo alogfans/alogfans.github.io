@@ -1,21 +1,39 @@
 baseURL: https://renfeng.org/
-languageCode: en-us
+defaultContentLanguage: en
 title: Feng Ren
 theme: PaperMod
+
+languages:
+  en:
+    languageName: English
+    weight: 1
+    params:
+      description: "Storage for AI Research | Founder of Mooncake Transfer Engine"
+      homeInfoParams:
+        Title: "Feng Ren"
+        Content: >
+          Storage for AI Researcher | Founder of [Mooncake Transfer Engine](https://github.com/kvcache-ai/Mooncake)
+  zh:
+    languageName: 中文
+    weight: 2
+    params:
+      description: "AI 存储系统研究者 | Mooncake 传输引擎创始人"
+      homeInfoParams:
+        Title: "任峰"
+        Content: >
+          AI 存储系统研究者 | [Mooncake 传输引擎](https://github.com/kvcache-ai/Mooncake) 创始人
 
 params:
   comments: true
   profileMode:
     enabled: false
-  homeInfoParams:
-    Title: "Feng Ren"
-    Content: >
-      Storage for AI Researcher | Founder of [Mooncake Transfer Engine](https://github.com/kvcache-ai/Mooncake)
-    socialIcons:
-      - name: "github"
-        url: "https://github.com/alogfans"
-      - name: "email"
-        url: "mailto:renfeng.chn+bot@outlook.com"
+  displayFullLangName: true
+  showAllLanguagesInHome: true
+  socialIcons:
+    - name: "github"
+      url: "https://github.com/alogfans"
+    - name: "email"
+      url: "mailto:renfeng.chn+bot@outlook.com"
 
 markup:
   highlight:
@@ -54,3 +72,28 @@ menu:
       name: About
       url: /about/
       weight: 20
+
+# 多语言菜单配置
+languages:
+  en:
+    menu:
+      main:
+        - identifier: archives
+          name: Archives
+          url: /archives/
+          weight: 10
+        - identifier: about
+          name: About
+          url: /about/
+          weight: 20
+  zh:
+    menu:
+      main:
+        - identifier: archives
+          name: 归档
+          url: /archives/
+          weight: 10
+        - identifier: about
+          name: 关于
+          url: /about/
+          weight: 20
