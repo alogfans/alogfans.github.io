@@ -5,6 +5,8 @@ description: ""
 comments: true
 ---
 
+> **按：** 本文根据我于 7 月 10 日在苏州举行的 CCF 信息存储专委会-存储测试工作组《存储测试场景、技术与社区建设》研讨会上所作的报告整理而成。感谢存储清华大学张武生老师和尚攸人的支持！
+
 随着大模型上下文长度不断增加，KVCache 占用的空间也越来越大。过去，KVCache 主要保存在 GPU 显存中；现在，越来越多的推理系统开始将它放到主机内存、本地 SSD，或者分布式存储中。
 
 当 KVCache 进入外部存储之后，就会出现一个很实际的问题：应该怎样评价一套存储系统是否适合保存 KVCache？
@@ -20,7 +22,7 @@ Mooncake 提出的“以存换算”可以简单理解为将已经计算过的�
 例如，模型先处理一个问题：`"What day is it today?"`，随后又收到一个问题：`"What day is it tomorrow?"`。
 这两个问题前面的内容相同。只要第一个请求对应的 KVCache 还在，第二个请求就不需要重新计算相同的前缀，只需要从发生变化的位置继续计算。
 
-![](/images/mooncake-storage-benchmark/kvcache-prefix-match.png)
+![这里复用了章总的一张图，表明 KVCache 前缀匹配的性质](/images/mooncake-storage-benchmark/kvcache-prefix-match.png)
 
 这里需要注意，KVCache 的复用不是普通的文本去重。某一段 token 即使内容相同，只要它前面的上下文不同，产生的 K/V 状态也不同，因此不能复用。
 例如：

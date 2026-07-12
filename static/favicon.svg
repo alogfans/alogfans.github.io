@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 64 64"
+     width="64"
+     height="64"
+     role="img"
+     aria-label="Layered triangular favicon">
+  <defs>
+    <clipPath id="triangle">
+      <path d="M32 6 L60 56 H4 Z"/>
+    </clipPath>
+
+    <linearGradient id="top" x1="0" y1="6" x2="0" y2="24" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFCD3D"/>
+      <stop offset="1" stop-color="#F26641"/>
+    </linearGradient>
+
+    <linearGradient id="pink" x1="0" y1="26" x2="0" y2="34" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#EA3596"/>
+      <stop offset="1" stop-color="#D7369E"/>
+    </linearGradient>
+
+    <linearGradient id="purple" x1="0" y1="36" x2="0" y2="45" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#A948A6"/>
+      <stop offset="1" stop-color="#8B53AB"/>
+    </linearGradient>
+
+    <linearGradient id="blue" x1="0" y1="47" x2="0" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5C82C3"/>
+      <stop offset="1" stop-color="#508FCC"/>
+    </linearGradient>
+  </defs>
+
+  <g clip-path="url(#triangle)">
+    <rect x="0" y="6"  width="64" height="18" fill="url(#top)"/>
+    <rect x="0" y="26" width="64" height="8"  fill="url(#pink)"/>
+    <rect x="0" y="36" width="64" height="9"  fill="url(#purple)"/>
+    <rect x="0" y="47" width="64" height="9"  fill="url(#blue)"/>
+  </g>
+</svg>

@@ -8,11 +8,11 @@ languages:
     label: English
     weight: 1
     params:
-      description: "Storage for AI Research | Founder of Mooncake Transfer Engine"
+      description: "Storage for AI | Author of Mooncake TE"
       homeInfoParams:
         Title: "Feng Ren"
         Content: >
-          Storage for AI Researcher | Founder of [Mooncake Transfer Engine](https://github.com/kvcache-ai/Mooncake)
+          Storage for AI | Author of [Mooncake TE](https://github.com/kvcache-ai/Mooncake)
     menu:
       main:
         - identifier: archives
@@ -27,11 +27,11 @@ languages:
     label: 中文
     weight: 2
     params:
-      description: "AI 存储系统研究者 | Mooncake 传输引擎创始人"
+      description: "AI 存储系统 | Mooncake 传输引擎作者"
       homeInfoParams:
         Title: "Feng Ren"
         Content: >
-          AI 存储系统研究者 | [Mooncake 传输引擎](https://github.com/kvcache-ai/Mooncake) 创始人
+          AI 存储系统 | [Mooncake TE](https://github.com/kvcache-ai/Mooncake) 作者
     menu:
       main:
         - identifier: archives
