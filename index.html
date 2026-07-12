@@ -28,7 +28,7 @@ Mooncake 的早期条件并不充裕。最初做相关研究时，课题组只�
 系统研究当然需要论文。没有论文，研究贡献很难被清楚表达，也很难进入学术共同体。但系统研究从来不只是论文数量游戏。一个系统是否真正有价值，还要看它是否解决了真实问题，是否被真实用户使用，是否能在生产环境中长期运行。
 而且，系统工作中的很多有价值成果，并不一定会首先以顶会或顶刊论文的形式出现。它们可能先以 arXiv 技术报告、开源代码、框架集成、生产部署等形式被社区看到和使用。对系统研究来说，这些并不是论文之外的“边角料”，而是系统价值形成过程的一部分。
 如果一个评价体系只能识别论文数量，哪怕所谓“破五唯”之后，也只是从数论文数量变成数 A 类论文数量，那么它就很难评价系统研究。更进一步说，如果一个地方没有区分赛道的评价能力，却仍然要求研究者按照统一的论文数量标准竞争，那么这条路对系统研究者并不友好。
-...</p></div><footer class=entry-footer><span title='2026-07-12 01:00:00 +0800 +0800'>2026年7月12日</span></footer><a class=entry-link aria-label="post link to 系统研究者的职业选择" href=https://renfeng.org/zh/posts/thinking-of-career/></a></article><article class=post-entry><header class=entry-header><h2 class=entry-hint-parent>面向 KVCache 负载的存储系统评测基准</h2></header><div class=entry-content><p>按： 本文根据我于 7 月 10 日在苏州举行的 CCF 信息存储专委会-存储测试工作组《存储测试场景、技术与社区建设》研讨会上所作的报告整理而成。感谢存储清华大学张武生老师和尚攸人的支持！
+...</p></div><footer class=entry-footer><span title='2026-07-12 01:00:00 +0800 +0800'>2026年7月12日</span></footer><a class=entry-link aria-label="post link to 系统研究者的职业选择" href=https://renfeng.org/zh/posts/thinking-of-career/></a></article><article class=post-entry><header class=entry-header><h2 class=entry-hint-parent>面向 KVCache 负载的存储系统评测基准</h2></header><div class=entry-content><p>按： 本文根据我于 7 月 10 日在苏州举行的 CCF 信息存储专委会-存储测试工作组《存储测试场景、技术与社区建设》研讨会上所作的报告整理而成。感谢清华大学张武生老师、尚攸人工程师的支持！
 随着大模型上下文长度不断增加，KVCache 占用的空间也越来越大。过去，KVCache 主要保存在 GPU 显存中；现在，越来越多的推理系统开始将它放到主机内存、本地 SSD，或者分布式存储中。
 当 KVCache 进入外部存储之后，就会出现一个很实际的问题：应该怎样评价一套存储系统是否适合保存 KVCache？
 现有的 FIO、YCSB 等工具当然也可以测带宽、时延和读写比例，但 KVCache 的访问方式与普通文件、对象或者 Key-Value 负载并不完全相同。我们因此尝试设计一套基于真实推理 Trace 的存储测试方法，在不运行完整大模型、也不需要 GPU 集群的情况下，重放 KVCache 的读写过程。
