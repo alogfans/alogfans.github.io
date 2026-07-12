@@ -45,6 +45,9 @@ languages:
 
 params:
   comments: true
+  label:
+    icon: /favicon.svg
+    iconHeight: 24
   profileMode:
     enabled: false
   displayFullLangName: true
