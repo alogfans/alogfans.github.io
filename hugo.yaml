@@ -23,6 +23,10 @@ languages:
           name: About
           url: /about/
           weight: 20
+        - identifier: rdma101
+          name: RDMA101
+          url: http://renfeng.org/RDMA101/
+          weight: 30
   zh:
     label: 中文
     weight: 2
@@ -42,6 +46,10 @@ languages:
           name: About
           url: /about/
           weight: 20
+        - identifier: rdma101
+          name: RDMA101
+          url: http://renfeng.org/RDMA101/
+          weight: 30
 
 params:
   comments: true
@@ -85,4 +93,3 @@ markup:
             - - $
               - $
         enable: true
-
