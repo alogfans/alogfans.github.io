@@ -21,7 +21,7 @@ languages:
           weight: 10
         - identifier: about
           name: About
-          url: /about/
+          url: https://libfeng.com
           weight: 20
         - identifier: rdma101
           name: RDMA101
@@ -44,7 +44,7 @@ languages:
           weight: 10
         - identifier: about
           name: About
-          url: /about/
+          url: https://libfeng.com
           weight: 20
         - identifier: rdma101
           name: RDMA101
