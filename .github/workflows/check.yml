@@ -27,6 +27,12 @@ jobs:
         run: |
           hugo list all
           find public -maxdepth 5 -type f -name index.html | sort | head -50
+          for page in public/index.html public/en/index.html; do
+            echo "Generated $page:"
+            printf "home-info count: "; (grep -o 'home-info' "$page" || true) | wc -l
+            printf "post-entry count: "; (grep -o 'post-entry' "$page" || true) | wc -l
+            head -c 220 "$page"; echo
+          done
       - name: Verify bilingual homepages and native PaperMod post lists
         run: |
           for page in public/index.html public/en/index.html; do
