@@ -3,6 +3,7 @@ date: '2026-04-01T01:00:00+08:00'
 title: '系统研究者的职业选择'
 description: ""
 comments: true
+draft: true
 ---
 
 > 本文仅代表个人观点，与涉及的任何单位无关。
