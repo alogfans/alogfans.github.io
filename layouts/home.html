@@ -1,7 +1,6 @@
 {{- define "main" -}}
 {{- $isZh := eq .Lang "zh" -}}
-{{- $postPath := printf "^/%s/posts/" .Lang -}}
-{{- $posts := where site.RegularPages "RelPermalink" "like" $postPath -}}
+{{- $posts := where site.RegularPages "Section" "posts" -}}
 {{- $posts = where $posts "Params.hiddenInHomeList" "!=" true -}}
 {{- $posts = $posts.ByDate.Reverse -}}
 {{- $paginator := .Paginate $posts 6 -}}
