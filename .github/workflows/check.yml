@@ -1,0 +1,32 @@
+name: Validate Hugo Site
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout with theme submodule
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: 'latest'
+          extended: true
+      - name: Validate build without deploying
+        run: hugo --minify
+      - name: Verify homepages
+        run: |
+          test -s public/index.html
+          test -s public/en/index.html
+          grep -q "home-hero" public/index.html
+          grep -q "writing-grid" public/index.html
+          grep -q "home-hero" public/en/index.html
