@@ -21,12 +21,13 @@ jobs:
         with:
           hugo-version: 'latest'
           extended: true
-      - name: Validate build without deploying
+      - name: Build site without deploying
         run: hugo --minify
-      - name: Verify homepages
+      - name: Verify bilingual homepages and native PaperMod post lists
         run: |
           test -s public/index.html
           test -s public/en/index.html
-          grep -q "home-hero" public/index.html
-          grep -q "writing-grid" public/index.html
-          grep -q "home-hero" public/en/index.html
+          grep -q 'home-info' public/index.html
+          grep -q 'post-entry' public/index.html
+          grep -q 'home-info' public/en/index.html
+          grep -q 'post-entry' public/en/index.html
