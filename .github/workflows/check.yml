@@ -1,0 +1,52 @@
+name: Validate Hugo Site
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout with theme submodule
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: 'latest'
+          extended: true
+      - name: Build site without deploying
+        run: hugo --minify
+      - name: Validate post lists, archives, and existing permalinks
+        run: |
+          test -s public/index.html
+          test -s public/en/index.html
+          grep -q 'home-info' public/index.html
+          grep -q 'post-entry' public/index.html
+          grep -q 'page-header' public/en/index.html
+          grep -q 'post-entry' public/en/index.html
+          test -s public/zh/posts/tent-internal-arch/index.html
+          test -s public/en/posts/tent-internal-arch/index.html
+          grep -q 'archive-entry' public/archives/index.html
+          # Hugo drafts must remain in Git but never be publicly generated.
+          test ! -e public/zh/posts/ccf-storage-evaluation-2026/index.html
+          test ! -e public/zh/posts/thinking-of-career/index.html
+          for page in public/index.html public/en/index.html public/zh/index.html public/archives/index.html; do
+            test -s "$page"
+            ! grep -q 'libfeng.com' "$page"
+            ! grep -q 'CCF Storage Evaluation 2026 is Coming' "$page"
+            ! grep -q '系统研究者的职业选择' "$page"
+          done
+      - name: Upload rendered preview
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hugo-preview
+          path: public/
+          retention-days: 7

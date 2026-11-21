@@ -3,6 +3,7 @@ date: '2026-04-13T22:27:00+08:00'
 title: 'CCF Storage Evaluation 2026 is Coming'
 description: ""
 comments: true
+draft: true
 ---
 
 我是 CCF 信息存储专委会存储测试工作组成员。欢迎对 Mooncake 传输引擎感兴趣的厂商参与相关存储测试与技术交流（尽管这里的存储更多是指 SSD 等外存）。

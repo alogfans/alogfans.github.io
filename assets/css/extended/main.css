@@ -1,30 +1,227 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+/* A restrained reading-focused layer on top of PaperMod.
+   PaperMod remains responsible for templates, dark mode and navigation. */
 
 :root {
-    --code-font-family: "JetBrains Mono", "Cascadia Code", "Fira Code", monospace;
+    --nav-width: 980px;
+    --main-width: 740px;
+    --gap: 24px;
+    --radius: 6px;
+    --code-font-family: "Cascadia Code", "JetBrains Mono", "Fira Code", monospace;
 }
 
-code {
-    font-family: var(--code-font-family) !important;
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+        "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    -webkit-font-smoothing: antialiased;
 }
 
+/* Keep list pages on the same quiet background as articles. */
+.list,
+[data-theme="dark"] .list {
+    background: var(--theme);
+}
+
+.header {
+    border-bottom: 1px solid var(--border);
+}
+
+.nav {
+    align-items: center;
+}
+
+.logo a {
+    font-size: 20px;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+}
+
+#menu a {
+    font-size: 14px;
+}
+
+.main {
+    padding-top: 32px;
+    padding-bottom: 48px;
+}
+
+/* Built-in PaperMod homeInfoParams: no custom homepage template. */
+.home-info.first-entry {
+    min-height: 0;
+    margin: 8px 0 14px;
+    padding: 20px 0 32px;
+    border-bottom: 1px solid var(--border);
+}
+
+.home-info .entry-header h1 {
+    font-size: 31px;
+    font-weight: 650;
+    line-height: 1.3;
+    letter-spacing: -0.025em;
+}
+
+.home-info .entry-content {
+    max-width: 650px;
+    margin-top: 14px;
+    color: var(--secondary);
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+.home-info .entry-content p {
+    margin: 0;
+}
+
+.home-info .entry-footer {
+    margin-top: 12px;
+}
+
+.home-info .social-icons a:first-of-type {
+    padding-inline-start: 0;
+}
+
+.home-info .social-icons a svg {
+    width: 21px;
+    height: 21px;
+}
+
+/* Section pages (/en/ and /zh/) use PaperMod's native page header. */
+.page-header {
+    margin: 8px 0 14px;
+    padding: 20px 0 32px;
+    border-bottom: 1px solid var(--border);
+}
+
+.page-header h1 {
+    font-size: 31px;
+    font-weight: 650;
+    letter-spacing: -0.025em;
+}
+
+.page-header .post-description {
+    max-width: 650px;
+    margin-top: 14px;
+    color: var(--secondary);
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+/* Chronological posts, separated by rules rather than boxes. */
+.post-entry {
+    margin: 0;
+    padding: 25px 0 26px;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--border);
+    border-radius: 0;
+    transition: none;
+}
+
+.post-entry:hover,
+.post-entry:active {
+    transform: none;
+}
+
+.post-entry .entry-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.45;
+    letter-spacing: -0.012em;
+}
+
+.post-entry .entry-header a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.post-entry .entry-content {
+    margin: 9px 0 11px;
+    color: var(--secondary);
+    font-size: 14px;
+    line-height: 1.75;
+    -webkit-line-clamp: 2;
+}
+
+.post-entry .entry-footer {
+    font-size: 12px;
+}
+
+.page-header h1,
+.post-title {
+    letter-spacing: -0.025em;
+}
+
+.post-title {
+    font-size: clamp(30px, 4vw, 39px);
+    line-height: 1.35;
+}
+
+/* Optimize long technical articles without changing their markup. */
 .post-content {
-    font-size: 0.94rem;
-    letter-spacing: 0.01em;
+    font-size: 16px;
+    line-height: 1.85;
+    letter-spacing: 0;
 }
 
 .post-content p {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.35rem;
+}
+
+.post-content h2 {
+    margin-top: 1.9em;
+}
+
+.post-content h3 {
+    margin-top: 1.6em;
 }
 
 .post-content pre {
     border: 1px solid var(--border);
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border-radius: var(--radius);
+    box-shadow: none;
+}
+
+.post-content code {
+    font-family: var(--code-font-family);
 }
 
 .comments {
     margin-top: 4rem;
-    border-top: 1px solid #eee;
     padding-top: 2rem;
+    border-top: 1px solid var(--border);
+}
+
+@media (max-width: 640px) {
+    :root {
+        --gap: 18px;
+    }
+
+    .main {
+        padding-top: 18px;
+    }
+
+    .home-info.first-entry {
+        padding: 14px 0 26px;
+    }
+
+    .home-info .entry-header h1 {
+        font-size: 28px;
+    }
+
+    .post-entry {
+        padding: 22px 0;
+    }
+
+    .post-entry .entry-header h2 {
+        font-size: 19px;
+    }
+
+    .post-content {
+        font-size: 15px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .post-entry {
+        transition: none;
+    }
 }

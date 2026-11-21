@@ -1,0 +1,44 @@
+{{- define "main" -}}
+{{- /* This site's existing posts live in content/zh/posts and content/en/posts.
+       Keep those URLs intact while rendering a plain PaperMod-style homepage. */ -}}
+{{- $section := cond (eq .Lang "en") "en" "zh" -}}
+{{- $posts := slice -}}
+{{- range hugo.Sites -}}
+  {{- range .RegularPages -}}
+    {{- if and (eq .Section $section) (not .Params.hiddenInHomeList) -}}
+      {{- $posts = append . $posts -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $posts = sort $posts "Date" "desc" -}}
+{{- $paginator := .Paginate $posts 10 -}}
+
+{{- if eq $paginator.PageNumber 1 -}}
+  {{- partial "home_info.html" . -}}
+{{- end -}}
+
+{{- range $paginator.Pages -}}
+<article class="post-entry">
+  <header class="entry-header">
+    <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+  </header>
+  {{- if ne (.Param "hideSummary") true }}
+  <div class="entry-content">
+    <p>{{ .Summary | plainify | htmlUnescape | truncate 180 }}</p>
+  </div>
+  {{- end }}
+  <footer class="entry-footer">{{ partial "post_meta.html" . }}</footer>
+</article>
+{{- end -}}
+
+{{- if gt $paginator.TotalPages 1 }}
+<nav class="pagination" aria-label="{{ if eq .Lang "zh" }}文章分页{{ else }}Article pagination{{ end }}">
+  {{- if $paginator.HasPrev }}
+    <a class="prev" href="{{ $paginator.Prev.URL }}" rel="prev">← {{ if eq .Lang "zh" }}上一页{{ else }}Previous{{ end }}</a>
+  {{- end }}
+  {{- if $paginator.HasNext }}
+    <a class="next" href="{{ $paginator.Next.URL }}" rel="next">{{ if eq .Lang "zh" }}下一页{{ else }}Next{{ end }} →</a>
+  {{- end }}
+</nav>
+{{- end }}
+{{- end -}}
