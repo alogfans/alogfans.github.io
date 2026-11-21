@@ -23,26 +23,8 @@ jobs:
           extended: true
       - name: Build site without deploying
         run: hugo --minify
-      - name: Validate post lists, archives, and existing permalinks
-        run: |
-          test -s public/index.html
-          test -s public/en/index.html
-          grep -q 'home-info' public/index.html
-          grep -q 'post-entry' public/index.html
-          grep -q 'page-header' public/en/index.html
-          grep -q 'post-entry' public/en/index.html
-          test -s public/zh/posts/tent-internal-arch/index.html
-          test -s public/en/posts/tent-internal-arch/index.html
-          grep -q 'archive-entry' public/archives/index.html
-          # Hugo drafts must remain in Git but never be publicly generated.
-          test ! -e public/zh/posts/ccf-storage-evaluation-2026/index.html
-          test ! -e public/zh/posts/thinking-of-career/index.html
-          for page in public/index.html public/en/index.html public/zh/index.html public/archives/index.html; do
-            test -s "$page"
-            ! grep -q 'libfeng.com' "$page"
-            ! grep -q 'CCF Storage Evaluation 2026 is Coming' "$page"
-            ! grep -q '系统研究者的职业选择' "$page"
-          done
+      - name: Verify language switching, posts, and public URLs
+        run: python3 scripts/validate_site.py
       - name: Upload rendered preview
         if: success()
         uses: actions/upload-artifact@v4
