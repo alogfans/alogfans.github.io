@@ -53,8 +53,8 @@ languages:
 
 params:
   mainSections:
-    - posts
-  disableSpecial1stPost: true
+    - zh
+    - en
   comments: true
   label:
     icon: /favicon.svg
