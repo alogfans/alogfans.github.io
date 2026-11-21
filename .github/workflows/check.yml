@@ -34,3 +34,10 @@ jobs:
           test -s public/zh/posts/tent-internal-arch/index.html
           test -s public/en/posts/tent-internal-arch/index.html
           grep -q 'archive-entry' public/archives/index.html
+      - name: Upload rendered preview
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hugo-preview
+          path: public/
+          retention-days: 7
