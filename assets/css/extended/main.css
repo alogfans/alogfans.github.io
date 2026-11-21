@@ -39,6 +39,34 @@ body {
     font-size: 14px;
 }
 
+/* A small language switch, visually secondary to the main navigation. */
+.logo-switches {
+    align-items: center;
+}
+
+.lang-switch {
+    align-items: center;
+}
+
+.lang-switch li,
+.lang-switch a {
+    font-size: 11px;
+}
+
+.lang-switch a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    margin: 0 3px;
+    font-weight: 500;
+    color: var(--secondary);
+}
+
+.lang-switch a:hover,
+.lang-switch a:focus-visible {
+    color: var(--primary);
+}
+
 .main {
     padding-top: 32px;
     padding-bottom: 48px;

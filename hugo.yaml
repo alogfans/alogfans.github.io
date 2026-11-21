@@ -5,8 +5,15 @@ theme: PaperMod
 
 languages:
   en:
-    label: English
-    weight: 1
+    contentDir: content/en
+    locale: en-US
+    label: EN
+    weight: 2
+    permalinks:
+      page:
+        posts: /posts/:contentbasename/
+      section:
+        posts: /posts/
     params:
       description: "Engineering notes on AI infrastructure, KVCache, RDMA and storage"
       homeInfoParams:
@@ -24,8 +31,15 @@ languages:
           url: http://renfeng.org/RDMA101/
           weight: 30
   zh:
+    contentDir: content/zh
+    locale: zh-CN
     label: 中文
-    weight: 2
+    weight: 1
+    permalinks:
+      page:
+        posts: /zh/posts/:contentbasename/
+      section:
+        posts: /zh/posts/
     params:
       description: "AI 基础设施、KVCache、RDMA 与存储系统的技术笔记"
       homeInfoParams:
@@ -45,8 +59,7 @@ languages:
 
 params:
   mainSections:
-    - zh
-    - en
+    - posts
   comments: true
   label:
     icon: /favicon.svg

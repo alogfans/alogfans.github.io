@@ -1,16 +1,8 @@
 {{- define "main" -}}
-{{- /* This site's existing posts live in content/zh/posts and content/en/posts.
-       Keep those URLs intact while rendering a plain PaperMod-style homepage. */ -}}
-{{- $section := cond (eq .Lang "en") "en" "zh" -}}
-{{- $posts := slice -}}
-{{- range hugo.Sites -}}
-  {{- range .RegularPages -}}
-    {{- if and (eq .Section $section) (not .Params.hiddenInHomeList) -}}
-      {{- $posts = append . $posts -}}
-    {{- end -}}
-  {{- end -}}
-{{- end -}}
-{{- $posts = sort $posts "Date" "desc" -}}
+{{- /* Native Hugo multilingual sites: page lists are scoped to the active language. */ -}}
+{{- $posts := where site.RegularPages "Section" "posts" -}}
+{{- $posts = where $posts "Params.hiddenInHomeList" "!=" true -}}
+{{- $posts = $posts.ByDate.Reverse -}}
 {{- $paginator := .Paginate $posts 10 -}}
 
 {{- if eq $paginator.PageNumber 1 -}}
