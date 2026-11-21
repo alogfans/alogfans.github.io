@@ -25,9 +25,9 @@ jobs:
         run: hugo --minify
       - name: Verify bilingual homepages and native PaperMod post lists
         run: |
-          test -s public/index.html
-          test -s public/en/index.html
-          grep -q 'home-info' public/index.html
-          grep -q 'post-entry' public/index.html
-          grep -q 'home-info' public/en/index.html
-          grep -q 'post-entry' public/en/index.html
+          for page in public/index.html public/en/index.html; do
+            test -s "$page" || { echo "::error::$page is missing"; exit 1; }
+            echo "Checking $page"
+            grep -q 'home-info' "$page" || { echo "::error::$page has no PaperMod home-info section"; exit 1; }
+            grep -q 'post-entry' "$page" || { echo "::error::$page has no post-entry list"; exit 1; }
+          done
