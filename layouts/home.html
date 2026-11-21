@@ -3,10 +3,10 @@
        Keep those URLs intact while rendering a plain PaperMod-style homepage. */ -}}
 {{- $section := cond (eq .Lang "en") "en" "zh" -}}
 {{- $posts := slice -}}
-{{- range site.Sites -}}
+{{- range hugo.Sites -}}
   {{- range .RegularPages -}}
     {{- if and (eq .Section $section) (not .Params.hiddenInHomeList) -}}
-      {{- $posts = append $posts . -}}
+      {{- $posts = append . $posts -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}
