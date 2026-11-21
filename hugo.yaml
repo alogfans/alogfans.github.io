@@ -8,11 +8,11 @@ languages:
     label: English
     weight: 1
     params:
-      description: "Storage for AI | Author of Mooncake TE"
+      description: "Engineering notes on AI infrastructure, KVCache, RDMA and storage"
       homeInfoParams:
         Title: "Feng Ren"
         Content: >
-          Storage for AI | Author of [Mooncake TE](https://github.com/kvcache-ai/Mooncake)
+          An engineer working on AI infrastructure. Notes on KVCache, RDMA, storage and the [Mooncake Transfer Engine](https://github.com/kvcache-ai/Mooncake).
     menu:
       main:
         - identifier: archives
@@ -31,11 +31,11 @@ languages:
     label: 中文
     weight: 2
     params:
-      description: "AI 存储系统 | Mooncake 传输引擎作者"
+      description: "AI 基础设施、KVCache、RDMA 与存储系统的技术笔记"
       homeInfoParams:
         Title: "Feng Ren"
         Content: >
-          AI 存储系统 | [Mooncake TE](https://github.com/kvcache-ai/Mooncake) 作者
+          AI 基础设施工程师，参与 [Mooncake](https://github.com/kvcache-ai/Mooncake) 开源项目并负责 Transfer Engine。这里记录 KVCache、RDMA、存储及系统工程方面的技术笔记。
     menu:
       main:
         - identifier: archives
@@ -52,6 +52,9 @@ languages:
           weight: 30
 
 params:
+  mainSections:
+    - posts
+  disableSpecial1stPost: true
   comments: true
   label:
     icon: /favicon.svg
