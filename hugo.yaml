@@ -11,7 +11,7 @@ languages:
     weight: 2
     permalinks:
       page:
-        posts: /posts/:slug/
+        posts: /posts/:contentbasename/
       section:
         posts: /posts/
     params:
@@ -37,7 +37,7 @@ languages:
     weight: 1
     permalinks:
       page:
-        posts: /zh/posts/:slug/
+        posts: /zh/posts/:contentbasename/
       section:
         posts: /zh/posts/
     params:
