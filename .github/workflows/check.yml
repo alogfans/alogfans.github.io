@@ -23,10 +23,6 @@ jobs:
           extended: true
       - name: Build site without deploying
         run: hugo --minify
-      - name: Inspect generated route mapping
-        run: |
-          hugo list all
-          find public -maxdepth 5 -name index.html | sort
       - name: Verify language switching, posts, and public URLs
         run: python3 scripts/validate_site.py
       - name: Upload rendered preview
