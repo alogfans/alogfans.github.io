@@ -1,0 +1,129 @@
+{{- define "main" -}}
+{{- $isZh := eq .Lang "zh" -}}
+{{- $postPath := printf "^/%s/posts/" .Lang -}}
+{{- $posts := where site.RegularPages "RelPermalink" "like" $postPath -}}
+{{- $posts = where $posts "Params.hiddenInHomeList" "!=" true -}}
+{{- $posts = $posts.ByDate.Reverse -}}
+{{- $paginator := .Paginate $posts 6 -}}
+
+<div class="home-shell">
+  {{- if eq $paginator.PageNumber 1 }}
+  <section class="home-hero" aria-labelledby="home-title">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span> FENG REN <span class="eyebrow-separator">/</span> ENGINEERING NOTES</p>
+      <h1 id="home-title">
+        {{- if $isZh -}}
+          构建 <span class="hero-accent">AI 推理</span><br>背后的系统。
+        {{- else -}}
+          Building the systems<br>behind <span class="hero-accent">AI inference.</span>
+        {{- end -}}
+      </h1>
+      <p class="hero-intro">
+        {{- if $isZh -}}
+          你好，我是任峰。一名专注于 AI 基础设施的工程师。这里记录高性能数据传输、KVCache、RDMA 与存储系统的工程实践和技术思考。
+        {{- else -}}
+          I'm Feng Ren, an engineer working on AI infrastructure. Here I share notes on high-performance data transfer, KVCache, RDMA, storage systems, and the ideas behind them.
+        {{- end -}}
+      </p>
+      <div class="hero-actions">
+        <a class="home-button home-button-primary" href="#writing">
+          {{ if $isZh }}阅读文章{{ else }}Explore writing{{ end }}
+          <span aria-hidden="true">↗</span>
+        </a>
+        <a class="home-button home-button-secondary" href="https://github.com/alogfans" target="_blank" rel="noopener noreferrer">
+          GitHub <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+      <p class="hero-footnote">{{ if $isZh }}关于系统、性能和工程取舍的笔记。{{ else }}Notes on systems, performance, and engineering tradeoffs.{{ end }}</p>
+    </div>
+    <div class="hero-visual" aria-label="{{ if $isZh }}从 GPU、互连到内存与存储的数据通路示意{{ else }}Data flow from GPU through interconnects to memory and storage{{ end }}">
+      <div class="visual-topline">
+        <span><span class="visual-live" aria-hidden="true"></span> SYSTEMS / IN MOTION</span>
+        <span>001—003</span>
+      </div>
+      <div class="visual-headline">Data moves.<br><span>Ideas scale.</span></div>
+      <div class="flow-diagram" aria-hidden="true">
+        <div class="flow-node">
+          <span class="flow-number">01 / COMPUTE</span>
+          <strong>GPU</strong>
+          <small>HBM</small>
+        </div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-node flow-node-accent">
+          <span class="flow-number">02 / CONNECT</span>
+          <strong>RDMA</strong>
+          <small>Interconnect</small>
+        </div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-node">
+          <span class="flow-number">03 / STORE</span>
+          <strong>KVCache</strong>
+          <small>DRAM · SSD</small>
+        </div>
+      </div>
+      <div class="visual-bottomline"><span>HIGH PERFORMANCE / DISTRIBUTED SYSTEMS</span><span aria-hidden="true">↗</span></div>
+    </div>
+  </section>
+
+  <section class="focus-section" aria-labelledby="focus-heading">
+    <div class="section-kicker"><span class="section-rule" aria-hidden="true"></span> {{ if $isZh }}关注方向{{ else }}WHAT I WORK ON{{ end }}</div>
+    <h2 id="focus-heading" class="visually-hidden">{{ if $isZh }}关注方向{{ else }}Focus areas{{ end }}</h2>
+    <div class="focus-grid">
+      <div class="focus-item"><span class="focus-index">01</span><h3>{{ if $isZh }}数据传输{{ else }}Data movement{{ end }}</h3><p>{{ if $isZh }}RDMA、多轨网络与异构互连{{ else }}RDMA, multi-rail networks, heterogeneous interconnects{{ end }}</p></div>
+      <div class="focus-item"><span class="focus-index">02</span><h3>{{ if $isZh }}缓存与存储{{ else }}Cache &amp; storage{{ end }}</h3><p>{{ if $isZh }}KVCache、分层缓存与存储系统{{ else }}KVCache, tiered memory, storage systems{{ end }}</p></div>
+      <div class="focus-item"><span class="focus-index">03</span><h3>{{ if $isZh }}系统工程{{ else }}Systems engineering{{ end }}</h3><p>{{ if $isZh }}性能分析、系统设计与生产实践{{ else }}Performance, architecture, production experience{{ end }}</p></div>
+    </div>
+  </section>
+  {{- end }}
+
+  <section class="writing-section" id="writing" aria-labelledby="writing-heading">
+    <div class="writing-heading-row">
+      <div>
+        <p class="section-kicker"><span class="section-rule" aria-hidden="true"></span> {{ if $isZh }}写作 / BLOG{{ else }}WRITING / BLOG{{ end }}</p>
+        <h2 id="writing-heading">{{ if $isZh }}最近的文章<span class="heading-period">.</span>{{ else }}Latest writing<span class="heading-period">.</span>{{ end }}</h2>
+        <p class="writing-subtitle">{{ if $isZh }}技术记录、实践总结与不定期更新。{{ else }}Technical deep dives, field notes, and occasional thoughts.{{ end }}</p>
+      </div>
+      <a class="archive-link" href="{{ "archives/" | relLangURL }}">{{ if $isZh }}全部归档{{ else }}All archives{{ end }} <span aria-hidden="true">↗</span></a>
+    </div>
+
+    {{- if $paginator.Pages }}
+    <div class="writing-grid">
+      {{- range $index, $post := $paginator.Pages }}
+      <article class="writing-card{{ if and (eq $paginator.PageNumber 1) (eq $index 0) }} writing-featured{{ end }}">
+        <div class="card-topline">
+          <span class="card-type">{{ if $isZh }}技术笔记{{ else }}ENGINEERING NOTE{{ end }}</span>
+          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time>
+        </div>
+        <h3 class="card-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+        <p class="card-excerpt">
+          {{- with .Description -}}
+            {{ . | plainify | truncate 140 }}
+          {{- else -}}
+            {{ .Summary | plainify | htmlUnescape | truncate 140 }}
+          {{- end -}}
+        </p>
+        <div class="card-bottomline">
+          <span>{{ if $isZh }}阅读文章{{ else }}Read article{{ end }}</span>
+          <span class="card-arrow" aria-hidden="true">↗</span>
+        </div>
+      </article>
+      {{- end }}
+    </div>
+    {{- else }}
+    <p class="no-posts">{{ if $isZh }}文章正在整理中。{{ else }}Writing in progress.{{ end }}</p>
+    {{- end }}
+
+    {{- if gt $paginator.TotalPages 1 }}
+    <nav class="home-pagination" aria-label="{{ if $isZh }}文章分页{{ else }}Article pages{{ end }}">
+      {{- if $paginator.HasPrev }}
+      <a href="{{ $paginator.Prev.URL }}" rel="prev">← {{ if $isZh }}上一页{{ else }}Previous{{ end }}</a>
+      {{- else }}<span></span>{{- end }}
+      <span class="page-counter">{{ $paginator.PageNumber }} / {{ $paginator.TotalPages }}</span>
+      {{- if $paginator.HasNext }}
+      <a href="{{ $paginator.Next.URL }}" rel="next">{{ if $isZh }}下一页{{ else }}Next{{ end }} →</a>
+      {{- else }}<span></span>{{- end }}
+    </nav>
+    {{- end }}
+  </section>
+</div>
+{{- end -}}
