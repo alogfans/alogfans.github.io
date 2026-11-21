@@ -19,10 +19,6 @@ languages:
           name: Archives
           url: /archives/
           weight: 10
-        - identifier: about
-          name: About
-          url: https://libfeng.com
-          weight: 20
         - identifier: rdma101
           name: RDMA101
           url: http://renfeng.org/RDMA101/
@@ -42,10 +38,6 @@ languages:
           name: Archives
           url: /archives/
           weight: 10
-        - identifier: about
-          name: About
-          url: https://libfeng.com
-          weight: 20
         - identifier: rdma101
           name: RDMA101
           url: http://renfeng.org/RDMA101/
